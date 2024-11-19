@@ -1,26 +1,68 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import ChatIcon from '@mui/icons-material/Chat'
+import SearchIcon from '@mui/icons-material/Search'
+import StarIcon from '@mui/icons-material/Star'
+import {
+	Avatar,
+	Cell,
+	Input,
+	List,
+	Section,
+	Tabbar,
+} from '@telegram-apps/telegram-ui'
+import { useState } from 'react'
+import { colors } from './tg'
+
+const tabs = [
+	{
+		id: 1,
+		text: 'Поиск',
+		Icon: () => <SearchIcon />,
+	},
+	{
+		id: 2,
+		text: 'Подписки',
+		Icon: () => <ChatIcon />,
+	},
+	{
+		id: 3,
+		text: 'Избранное',
+		Icon: () => <StarIcon />,
+	},
+]
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	const [currentTab, setCurrentTab] = useState<number>(0)
+
+	return (
+		<List
+			style={{
+				background: colors.secondary_bg_color,
+			}}
+		>
+			<Input header='Поиск' size={20} />
+
+			<Section header='Каналы'>
+				<Cell before={<Avatar size={40} />} description='@channel1'>
+					Дайджест 1
+				</Cell>
+				<Cell before={<Avatar size={40} />} description='@channel2'>
+					Дайджест 2
+				</Cell>
+			</Section>
+			<Tabbar>
+				{tabs.map(({ id, text, Icon }) => (
+					<Tabbar.Item
+						key={id}
+						text={text}
+						selected={id === currentTab}
+						onClick={() => setCurrentTab(id)}
+					>
+						<Icon />
+					</Tabbar.Item>
+				))}
+			</Tabbar>
+		</List>
+	)
 }
 
-export default App;
+export default App

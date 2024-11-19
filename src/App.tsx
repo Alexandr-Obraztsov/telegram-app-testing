@@ -37,7 +37,6 @@ function App() {
 		<List
 			style={{
 				background: colors.secondary_bg_color,
-				height: '100px',
 			}}
 		>
 			<Input header='Поиск' size={20} />
